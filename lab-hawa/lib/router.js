@@ -36,17 +36,15 @@ Router.prototype.route = function() {
       parseJSON(req)
     ])
     .then( () => {
-      if (typeof this.routes[req.method][req.url.pathname] === 'function') {
+      if(typeof this.routes[req.method][req.url.pathname] === 'function') {
         this.routes[req.method][req.url.pathname](req, res);
         return;
       }
-
-      console.error('route not found');
-      response.sendText(res, 404, 'route not found');
+      response.text(res, 404, 'Not found');
     })
     .catch( err => {
       console.error(err);
-      response.sendText(res, 400, 'bad request');
+      response.text(res, 400, 'Bad request');
     });
   };
 };
