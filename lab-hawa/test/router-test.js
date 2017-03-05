@@ -1,8 +1,8 @@
 'use strict';
 
 const request = require('superagent');
-
 const expect = require('chai').expect;
+const PORT = process.env.PORT || 3000;
 
 require('../server.js');
 
@@ -11,7 +11,7 @@ describe('Spirit Animal Routes', function() {
 
   describe('POST: /api/spiritAnimal', function() {
     it('should return a spirit animal, and a name', function(done) {
-      request.post('localhost:3000/api/spiritAnimal')
+      request.post(`localhost:${PORT}/api/spiritAnimal`)
       .send({ name: 'Hawa', spiritAnimal: 'pink dragon', spiritAnimalName: 'Simba'})
       .end((err, res) => {
         if (err) return done(err);
@@ -27,7 +27,7 @@ describe('Spirit Animal Routes', function() {
 
   describe('GET: /api/spiritAnimal', function() {
     it('should return a spirit animal', function(done) {
-      request.get(`localhost:3000/api/spiritAnimal?id=${spiritAnimal.id}`)
+      request.get(`localhost:${PORT}/api/spiritAnimal?id=${spiritAnimal.id}`)
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.equal(200);
@@ -41,7 +41,7 @@ describe('Spirit Animal Routes', function() {
 
   describe('DELETE: /api/spiritAnimal', function() {
     it('should return no content', function(done) {
-      request.delete(`localhost:3000/api/spiritAnimal?id=${spiritAnimal.id}`)
+      request.delete(`localhost:${PORT}/api/spiritAnimal?id=${spiritAnimal.id}`)
       .end((err, res) => {
         expect(res.status).to.equal(204);
         expect(res.body.title).to.equal(undefined);
